@@ -102,7 +102,7 @@ public class MainApplication {
         Saloon v = new Saloon(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
         String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
-        if (addOptions.equals("Y")) {
+        if (addOptions.equals("Yes")) {
             boolean success = false;
             while (!success) {
                 try {
@@ -132,7 +132,7 @@ public class MainApplication {
         Suv v = new Suv(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
         String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
-        if (addOptions.equals("Y")) {
+        if (addOptions.equals("Yes")) {
             boolean success = false;
             while (!success) {
                 try {
@@ -159,8 +159,13 @@ public class MainApplication {
         String vin = Reader.readLine("Enter vehicle vin: ");
         GearboxType gearboxType = Reader.readEnum("Please select gearbox type: ", GearboxType.class);
         String id = sequence.next();
-        Vehicle v = new Motorbike(id, make, model, year, gearboxType, colour, mileage, vin);
+        Motorbike v = new Motorbike(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
+        String addLuggageBox = Reader.readObject("Does the motorbike have a luggage box?", "Yes", "No");
+        if (addLuggageBox.equals("Yes")) {
+            v.addLuggageBox();
+            System.out.println("Luggage box added.");
+        }
         System.out.println("Vehicle added with ID: " + id);
     }
 
