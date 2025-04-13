@@ -1,5 +1,5 @@
 public class Motorbike extends Vehicle {
-    private boolean hasLuggageBox = false;
+    public boolean hasLuggageBox = false;
 
     public Motorbike(String id, String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
         super(id, make, model, year, gearboxType, colour, mileage, vin);

@@ -40,6 +40,10 @@ public class MainApplication {
         String id = sequence.next();
         Estate e = new Estate(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(e);
+        String thirdRowSeat = Reader.readObject("Does the vehicle have a third row seat?", "Y", "N");
+        if (thirdRowSeat.equals("Y")) {
+            e.addThirdRowSeat();
+        }
         System.out.println("Vehicle added with ID: " + id);
     }
 
@@ -87,8 +91,12 @@ public class MainApplication {
         String vin = Reader.readLine("Enter vehicle vin: ");
         GearboxType gearboxType = Reader.readEnum("Please select gearbox type: ", GearboxType.class);
         String id = sequence.next();
-        Vehicle v = new Suv(id, make, model, year, gearboxType, colour, mileage, vin);
+        Suv v = new Suv(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
+        String allWheelDrive = Reader.readObject("Does the vehicle have all-wheel drive?", "Y", "N");
+        if (allWheelDrive.equals("Y")) {
+            v.addAllWheelDrive();
+        }
         System.out.println("Vehicle added with ID: " + id);
     }
 
@@ -132,21 +140,51 @@ public class MainApplication {
         }
     }
 
-    @Menu(command = "M", description = "Modify vehicle entry", id = 8, subMenuIDs = {9, 10, 11})
-    @Menu(command = "O", description = "Add vehicle options", id = 9)
-    public void addOptions() {
-        Vehicle v = search();
-        if (v != null) {
-            if (v instanceof Suv) {
-                ((Suv) v).addAllWheelDrive();
-            } else if (v instanceof Motorbike) {
-                ((Motorbike) v).addLuggageBox();
-            }
-            System.out.println("Options added to vehicle with ID: " + v.getId());
-        } else {
-            System.out.println("No vehicle found to modify.");
+    public static void addOption(Car car) {
+        while (Reader.readBoolean("Add another option? (Y/N)")) {
+            String option = Reader.readObject("Select an Option", "Sat Nav", "Parking Sensors", "Tow Bar", "Roof Rack");
+            car.addOption(option);
+            System.out.println("Option added: " + option);
         }
     }
+
+
+    @Menu(command = "M", description = "Modify vehicle entry", id = 8, subMenuIDs = {9, 10, 11})
+    @Menu(command = "O", description = "Add car options", id = 9)
+    public void addOptions() {
+        Car v = (Car) search();
+        if (v != null) {
+            addOption(v);
+        } else {
+            System.out.println("No car found to modify.");
+        }
+    }
+
+    @Menu(command = "LR", description = "Add/remove motorbike luggage rack", id = 10)
+    public void addRemoveLuggageRack() {
+        Motorbike v = (Motorbike) search();
+        if (v != null && !v.hasLuggageBox) {
+            String option = Reader.readObject("Add luggage rack?", "Yes", "No");
+            if (option.equals("Yes")) {
+                v.addLuggageBox();
+                System.out.println("Luggage box added.");
+            } else {
+                System.out.println("Luggage box not added.");
+            }
+        } else if (v != null) {
+                String option = Reader.readObject("Remove luggage rack?", "Yes", "No");
+                if (option.equals("Yes")) {
+                    v.removeLuggageBox();
+                    System.out.println("Luggage box removed.");
+                } else {
+                    System.out.println("Luggage box not removed.");
+                }
+            }
+        else {
+            System.out.println("No motorbike found to modify.");
+        }
+    }
+
 
 }
 
