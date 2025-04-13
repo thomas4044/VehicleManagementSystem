@@ -29,18 +29,16 @@ public abstract class Car extends Vehicle {
                 this.hasRoofRack = true;
                 break;
             case "All-Wheel Drive":
-                if (this instanceof Suv) {
+                if (this instanceof Suv)
                     ((Suv) this).addAllWheelDrive();
-                } else {
+                else
                     throw new IllegalArgumentException("All-Wheel Drive is available only for SUVs.");
-                }
                 break;
             case "Third Row Seat":
-                if (this instanceof Estate) {
+                if (this instanceof Estate)
                     ((Estate) this).addThirdRowSeat();
-                } else {
+                else
                     throw new IllegalArgumentException("Third Row Seat is available only for Estate cars.");
-                }
                 break;
             default:
                 throw new IllegalArgumentException("Invalid option or input. Please enter an option as written above.");
@@ -48,10 +46,10 @@ public abstract class Car extends Vehicle {
     }
 
     protected String getAdditionalOptions() {
-StringBuilder result = new StringBuilder();
-if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack
-        && !(this instanceof Suv && ((Suv) this).hasAllWheelDrive)
-        && !(this instanceof Estate && ((Estate) this).hasThirdRowSeat)) {
+        StringBuilder result = new StringBuilder();
+        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack
+                && !(this instanceof Suv && ((Suv) this).hasAllWheelDrive)
+                && !(this instanceof Estate && ((Estate) this).hasThirdRowSeat)) {
             result.append("\nNo additional options");
         } else {
             result.append("\nAdditional Options:");
