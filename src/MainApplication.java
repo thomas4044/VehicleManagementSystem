@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static devtools.util.CollectionUtils.search;
 
 public class MainApplication {
 
@@ -182,6 +181,34 @@ public class MainApplication {
             }
         else {
             System.out.println("No motorbike found to modify.");
+        }
+    }
+
+    @Menu(command = "C", description = "Change vehicle colour", id = 11)
+    public void changeColour() {
+        Vehicle v = search();
+        if (v != null) {
+            String newColour = Reader.readObject("Select vehicle colour: ", "Red", "Blue", "Green", "Black",
+                    "White", "Yellow");
+            v.setColour(newColour);
+            System.out.println("Vehicle colour updated to: " + newColour);
+        } else {
+            System.out.println("No vehicle found to modify.");
+        }
+    }
+
+    @Menu(command = "M", description = "Change vehicle mileage", id = 11)
+    public void changeMileage() {
+        Vehicle v = search();
+        if (v != null) {
+            int currentMileage = v.getMileage();
+            System.out.println("Current mileage: " + currentMileage);
+            int newMileage = Reader.readInt("Enter updated vehicle mileage: ",
+                    currentMileage, 1_000_000);        // Mileage cannot decrease
+            v.setMileage(newMileage);
+            System.out.println("Vehicle colour updated to: " + newMileage);
+        } else {
+            System.out.println("No vehicle found to modify.");
         }
     }
 
