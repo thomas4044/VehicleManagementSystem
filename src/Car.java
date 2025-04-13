@@ -47,9 +47,11 @@ public abstract class Car extends Vehicle {
         }
     }
 
-    protected String getAdditionalOptionsString(boolean... additionalOptions) {
-        StringBuilder result = new StringBuilder();
-        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
+    protected String getAdditionalOptions() {
+StringBuilder result = new StringBuilder();
+if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack
+        && !(this instanceof Suv && ((Suv) this).hasAllWheelDrive)
+        && !(this instanceof Estate && ((Estate) this).hasThirdRowSeat)) {
             result.append("\nNo additional options");
         } else {
             result.append("\nAdditional Options:");
@@ -57,6 +59,12 @@ public abstract class Car extends Vehicle {
             if (hasParkingSensors) result.append("\nParking Sensors");
             if (hasTowBar) result.append("\nTow Bar");
             if (hasRoofRack) result.append("\nRoof Rack");
+            if (this instanceof Suv && ((Suv) this).hasAllWheelDrive) {
+                result.append("\nAll-Wheel Drive");
+            }
+            if (this instanceof Estate && ((Estate) this).hasThirdRowSeat) {
+                result.append("\nThird Row Seat");
+            }
         }
         return result.toString();
     }

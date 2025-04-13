@@ -15,7 +15,7 @@ public class Motorbike extends Vehicle {
 
     @Override
     public String toString() {
-        return "Motorbike: \n" + super.toString() + "\nHas luggage box:\t" + hasLuggageBox;
+        return "\nEntry ID:\t" + getId() + "\nMotorbike:" + super.toString() + "\nHas luggage box:\t" + hasLuggageBox;
         }
 
     @Override

@@ -7,17 +7,6 @@ public class Saloon extends Car {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append("Saloon car:\n").append(super.toString());
-        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
-            result.append("\nNo additional options");
-        } else {
-            result.append("\nAdditional Options:");
-            if (hasSatNav) result.append("\nSat Nav");
-            if (hasParkingSensors) result.append("\nParking Sensors");
-            if (hasTowBar) result.append("\nTow Bar");
-            if (hasRoofRack) result.append("\nRoof Rack");
-        }
-        return result.toString();
+        return "\nEntry ID:\t" + getId() + "\nSaloon car:" + super.toString() + getAdditionalOptions();
     }
 }
