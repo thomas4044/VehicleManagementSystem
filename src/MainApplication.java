@@ -25,6 +25,7 @@ public class MainApplication {
 
     }
 
+    @SuppressWarnings("ReassignedVariable")
     @Menu(command = "A", description = "Add Vehicle", id = 0, subMenuIDs = {1, 2, 3, 4, 5})
     @Menu(command = "E", description = "Add Estate", id = 1)
     public void addEstate() {
@@ -39,9 +40,19 @@ public class MainApplication {
         String id = sequence.next();
         Estate e = new Estate(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(e);
-        String thirdRowSeat = Reader.readObject("Does the vehicle have a third row seat?", "Y", "N");
-        if (thirdRowSeat.equals("Y")) {
-            e.addThirdRowSeat();
+        String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
+        if (addOptions.equals("Yes")) {
+            boolean success = false;
+            while (!success) {
+                try {
+                    do addOption(e);
+                    while (Reader.readBoolean("Add another option? (Y/N)"));
+                    success = true;
+                } catch (IllegalArgumentException error) {
+                    System.out.println(error.getMessage());
+                    Reader.readLine("Press Enter to try again...");
+                }
+            }
         }
         System.out.println("Vehicle added with ID: " + id);
     }
@@ -58,8 +69,22 @@ public class MainApplication {
         String vin = Reader.readLine("Enter vehicle vin: ");
         GearboxType gearboxType = Reader.readEnum("Please select gearbox type: ", GearboxType.class);
         String id = sequence.next();
-        Vehicle v = new Hatchback(id, make, model, year, gearboxType, colour, mileage, vin);
+        Hatchback v = new Hatchback(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
+        String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
+        if (addOptions.equals("Yes")) {
+            boolean success = false;
+            while (!success) {
+                try {
+                    do addOption(v);
+                    while (Reader.readBoolean("Add another option? (Y/N)"));
+                    success = true;
+                } catch (IllegalArgumentException error) {
+                    System.out.println(error.getMessage());
+                    Reader.readLine("Press Enter to try again...");
+                }
+            }
+        }
         System.out.println("Vehicle added with ID: " + id);
     }
 
@@ -74,8 +99,22 @@ public class MainApplication {
         String vin = Reader.readLine("Enter vehicle vin: ");
         GearboxType gearboxType = Reader.readEnum("Please select gearbox type: ", GearboxType.class);
         String id = sequence.next();
-        Vehicle v = new Saloon(id, make, model, year, gearboxType, colour, mileage, vin);
+        Saloon v = new Saloon(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
+        String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
+        if (addOptions.equals("Y")) {
+            boolean success = false;
+            while (!success) {
+                try {
+                    do addOption(v);
+                    while (Reader.readBoolean("Add another option? (Y/N)"));
+                    success = true;
+                } catch (IllegalArgumentException error) {
+                    System.out.println(error.getMessage());
+                    Reader.readLine("Press Enter to try again...");
+                }
+            }
+        }
         System.out.println("Vehicle added with ID: " + id);
     }
 
@@ -92,9 +131,19 @@ public class MainApplication {
         String id = sequence.next();
         Suv v = new Suv(id, make, model, year, gearboxType, colour, mileage, vin);
         vehicles.add(v);
-        String allWheelDrive = Reader.readObject("Does the vehicle have all-wheel drive?", "Y", "N");
-        if (allWheelDrive.equals("Y")) {
-            v.addAllWheelDrive();
+        String addOptions = Reader.readObject("Does the vehicle have additional options?", "Yes", "No");
+        if (addOptions.equals("Y")) {
+            boolean success = false;
+            while (!success) {
+                try {
+                    do addOption(v);
+                    while (Reader.readBoolean("Add another option? (Y/N)"));
+                    success = true;
+                } catch (IllegalArgumentException error) {
+                    System.out.println(error.getMessage());
+                    Reader.readLine("Press Enter to try again...");
+                }
+            }
         }
         System.out.println("Vehicle added with ID: " + id);
     }
@@ -150,10 +199,13 @@ public class MainApplication {
     @Menu(command = "O", description = "Add car options", id = 9)
     public void addOptions() {
         Car v = (Car) search();
-        if (v != null) {
+        if (v != null) try {
             do addOption(v);
             while (Reader.readBoolean("Add another option? (Y/N)"));
-        } else {
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        else {
             System.out.println("No car found to modify.");
         }
     }
@@ -170,15 +222,14 @@ public class MainApplication {
                 System.out.println("Luggage box not added.");
             }
         } else if (v != null) {
-                String option = Reader.readObject("Remove luggage rack?", "Yes", "No");
-                if (option.equals("Yes")) {
-                    v.removeLuggageBox();
-                    System.out.println("Luggage box removed.");
-                } else {
-                    System.out.println("Luggage box not removed.");
-                }
+            String option = Reader.readObject("Remove luggage rack?", "Yes", "No");
+            if (option.equals("Yes")) {
+                v.removeLuggageBox();
+                System.out.println("Luggage box removed.");
+            } else {
+                System.out.println("Luggage box not removed.");
             }
-        else {
+        } else {
             System.out.println("No motorbike found to modify.");
         }
     }
