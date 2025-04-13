@@ -6,8 +6,8 @@ public abstract class Car extends Vehicle {
     private boolean hasTowBar = false;
     private boolean hasRoofRack = false;
 
-    public Car(String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
-        super(make, model, year, gearboxType, colour, mileage, vin);
+    public Car(String id, String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
+        super(id, make, model, year, gearboxType, colour, mileage, vin);
 
     }
 
@@ -28,12 +28,29 @@ public abstract class Car extends Vehicle {
             case "Roof Rack":
                 this.hasRoofRack = true;
                 break;
+            case "All-Wheel Drive":
+                if (this instanceof Suv) {
+                    ((Suv) this).addAllWheelDrive();
+                } else {
+                    throw new IllegalArgumentException("All-Wheel Drive is available only for SUVs.");
+                }
+                break;
+            case "Third Row Seat":
+                if (this instanceof Estate) {
+                    ((Estate) this).addThirdRowSeat();
+                } else {
+                    throw new IllegalArgumentException("Third Row Seat is available only for Estate cars.");
+                }
+                break;
             default:
                 throw new IllegalArgumentException("Invalid option or input. Please enter an option as written above.");
         }
     }
 
-
+    @Override
+    public int compareTo(Vehicle o) {
+        return 0;
+    }
 //    @Override
 //    public String toString() {
 //        return "Car: \n" + super.toString() + "\nHas Sat Nav:\t" + hasSatNav + "\nHas Parking Sensors:\t" + hasParkingSensors

@@ -1,6 +1,8 @@
+import java.io.Serializable;
 
 // Class is abstract as only Car or Motorbike objects should be created. Properties which should not be changed are final.
-public abstract class Vehicle {
+public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
+    private final String id;
     private final String make;
     private final String model;
     private final int year;
@@ -9,7 +11,8 @@ public abstract class Vehicle {
     private int mileage;
     private final String vin;
 
-    public Vehicle(String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
+    public Vehicle(String id, String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
+        this.id = id;
         this.make = make;
         this.model = model;
         this.year = year;

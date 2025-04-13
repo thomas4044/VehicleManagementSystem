@@ -1,6 +1,6 @@
 public class Hatchback extends Car{
-    public Hatchback(String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
-        super(make, model, year, gearboxType, colour, mileage, vin);
+    public Hatchback(String id, String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
+        super(id, make, model, year, gearboxType, colour, mileage, vin);
     }
 
     @Override
