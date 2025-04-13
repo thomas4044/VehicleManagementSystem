@@ -19,7 +19,7 @@ public class MainApplication {
     @Data
     public Sequence sequence = new Sequence(1, 1_000_000, "V");
 
-    public static void main(String[] args) {
+    public static void main(String[] ignoredArgs) {
 
         Application.start(MainApplication.class);
 
@@ -140,20 +140,19 @@ public class MainApplication {
     }
 
     public static void addOption(Car car) {
-        while (Reader.readBoolean("Add another option? (Y/N)")) {
-            String option = Reader.readObject("Select an Option", "Sat Nav", "Parking Sensors", "Tow Bar", "Roof Rack");
-            car.addOption(option);
-            System.out.println("Option added: " + option);
-        }
+        String option = Reader.readObject("Select an Option", "Sat Nav", "Parking Sensors", "Tow Bar", "Roof Rack",
+                "All-Wheel Drive", "Third Row Seat");
+        car.addOption(option);
+        System.out.println("Option added: " + option);
     }
 
-
-    @Menu(command = "M", description = "Modify vehicle entry", id = 8, subMenuIDs = {9, 10, 11})
+    @Menu(command = "M", description = "Modify vehicle entry", id = 8, subMenuIDs = {9, 10, 11, 12})
     @Menu(command = "O", description = "Add car options", id = 9)
     public void addOptions() {
         Car v = (Car) search();
         if (v != null) {
-            addOption(v);
+            do addOption(v);
+            while (Reader.readBoolean("Add another option? (Y/N)"));
         } else {
             System.out.println("No car found to modify.");
         }
@@ -197,7 +196,7 @@ public class MainApplication {
         }
     }
 
-    @Menu(command = "M", description = "Change vehicle mileage", id = 11)
+    @Menu(command = "M", description = "Change vehicle mileage", id = 12)
     public void changeMileage() {
         Vehicle v = search();
         if (v != null) {
