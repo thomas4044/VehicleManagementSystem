@@ -14,8 +14,15 @@ public class Suv extends Car {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("SUV:\n").append(super.toString());
-        if (hasAllWheelDrive) {
-            result.append("\nAll Wheel Drive");
+        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack && !hasAllWheelDrive) {
+            result.append("\nNo additional options");
+        } else {
+            result.append("\nAdditional Options:");
+            if (hasSatNav) result.append("\nSat Nav");
+            if (hasParkingSensors) result.append("\nParking Sensors");
+            if (hasTowBar) result.append("\nTow Bar");
+            if (hasRoofRack) result.append("\nRoof Rack");
+            if (hasAllWheelDrive) result.append("\nAll-Wheel Drive");
         }
         return result.toString();
     }

@@ -1,10 +1,10 @@
 // Class is abstract as each car type is now its own class
 public abstract class Car extends Vehicle {
 
-    private boolean hasSatNav = false;
-    private boolean hasParkingSensors = false;
-    private boolean hasTowBar = false;
-    private boolean hasRoofRack = false;
+    protected boolean hasSatNav = false;
+    protected boolean hasParkingSensors = false;
+    protected boolean hasTowBar = false;
+    protected boolean hasRoofRack = false;
 
     public Car(String id, String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
         super(id, make, model, year, gearboxType, colour, mileage, vin);
@@ -47,29 +47,27 @@ public abstract class Car extends Vehicle {
         }
     }
 
-    @Override
-    public int compareTo(Vehicle o) {
-        return 0;
-    }
+
+
 //    @Override
 //    public String toString() {
 //        return "Car: \n" + super.toString() + "\nHas Sat Nav:\t" + hasSatNav + "\nHas Parking Sensors:\t" + hasParkingSensors
 //                + "\nHas Tow Bar:\t" + hasTowBar + "\nHas Roof Rack:\t" + hasRoofRack;
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(super.toString());
-        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
-            result.append("No additional options");
-        } else {
-            result.append("\nAdditional Options:");
-            if (hasSatNav) result.append("\nSat Nav");
-            if (hasParkingSensors) result.append("\nParking Sensors");
-            if (hasTowBar) result.append("\nTow Bar");
-            if (hasRoofRack) result.append("\nRoof Rack");
-        }
-        return result.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder result = new StringBuilder();
+//        result.append(super.toString());
+//        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
+//            result.append("\nNo additional options");
+//        } else {
+//            result.append("\nAdditional Options:");
+//            if (hasSatNav) result.append("\nSat Nav");
+//            if (hasParkingSensors) result.append("\nParking Sensors");
+//            if (hasTowBar) result.append("\nTow Bar");
+//            if (hasRoofRack) result.append("\nRoof Rack");
+//        }
+//        return result.toString();
+//    }
 }
 

@@ -23,6 +23,9 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
     }
 
     // Getters for vehicle properties
+    public String getId() {
+        return id;
+    }
     public String getMake() {
         return make;
     }
@@ -54,10 +57,31 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
     }
 
     @Override
+    public int compareTo(Vehicle other) {
+        int compare = this.make.compareTo(other.make);
+        if (compare != 0) {
+            return compare;
+        }
+        compare = this.model.compareTo(other.model);
+        if (compare != 0) {
+            return compare;
+        }
+        compare = this.getClass().getName().compareTo(other.getClass().getName());
+        if (compare != 0) {
+            return compare;
+        }
+        compare = this.vin.compareTo(other.vin);
+        if (compare != 0) {
+            return compare;
+        }
+        return this.id.compareTo(other.id);
+    }
+
+    @Override
     public String toString() {
-        return "\nMake:\t" + make.toUpperCase() + "\nModel:\t" + model.toUpperCase() + "\nYear:\t"
-                + year + "\nVIN:\t" + vin.toUpperCase() + "\nGearbox Type:\t" + gearboxType
-                + "\nColour:\t" + colour.toUpperCase() + "\nMileage:\t" + mileage;
+        return "\nMake:\t" + getMake() + "\nModel:\t" + getModel() + "\nYear:\t"
+                + getYear() + "\nVIN:\t" + getVin() + "\nGearbox Type:\t" + getGearboxType()
+                + "\nColour:\t" + getColour() + "\nMileage:\t" + getMileage();
     }
 
 }
