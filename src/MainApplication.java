@@ -179,7 +179,7 @@ public class MainApplication {
         }
     }
 
-    private Vehicle search(List list) {
+    private Vehicle search(List<Vehicle> list) {
         String key = Reader.readLine("Enter a search key: ");
         Collection<Vehicle> search = CollectionUtils.search(key, list);
         return Reader.readObject("Choose a vehicle", search);
