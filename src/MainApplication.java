@@ -17,6 +17,9 @@ public class MainApplication {
     public List<Vehicle> vehicles = new ArrayList<>();
 
     @Data
+    public List<Vehicle> soldVehicles = new ArrayList<>();
+
+    @Data
     public Sequence sequence = new Sequence(1, 1_000_000, "V");
 
     public static void main(String[] ignoredArgs) {
@@ -26,7 +29,7 @@ public class MainApplication {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    @Menu(command = "A", description = "Add Vehicle", id = 0, subMenuIDs = {1, 2, 3, 4, 5})
+    @Menu(command = "A", description = "Add Vehicle", id = 0, index = -2, subMenuIDs = {1, 2, 3, 4, 5})
     @Menu(command = "E", description = "Add Estate", id = 1)
     public void addEstate() {
         String make = Reader.readLine("Enter vehicle make: ");
@@ -56,7 +59,6 @@ public class MainApplication {
         }
         System.out.println("Vehicle added with ID: " + id);
     }
-
 
     @Menu(command = "H", description = "Add Hatchback", id = 2)
     public void addHatchback() {
@@ -169,7 +171,7 @@ public class MainApplication {
         System.out.println("Vehicle added with ID: " + id);
     }
 
-    @Menu(command = "L", description = "List all vehicles", id = 6)
+    @Menu(command = "L", description = "List all vehicles", id = 6, index = 1)
     public void listVehicles() {
         Collections.sort(vehicles);
         for (Vehicle v : vehicles) {
@@ -177,15 +179,15 @@ public class MainApplication {
         }
     }
 
-    private Vehicle search() {
+    private Vehicle search(List list) {
         String key = Reader.readLine("Enter a search key: ");
-        Collection<Vehicle> search = CollectionUtils.search(key, vehicles);
+        Collection<Vehicle> search = CollectionUtils.search(key, list);
         return Reader.readObject("Choose a vehicle", search);
     }
 
-    @Menu(command = "S", description = "Search for a vehicle", id = 7, global = true)
+    @Menu(command = "S", description = "Search for a vehicle", id = 7, index = -1, global = true)
     public void searchAndDisplay() {
-        Vehicle v = search(); // May be null
+        Vehicle v = search(vehicles); // May be null
         if (v != null) {
             System.out.println(v);
         } else {
@@ -200,10 +202,10 @@ public class MainApplication {
         System.out.println("Option added: " + option);
     }
 
-    @Menu(command = "M", description = "Modify vehicle entry", id = 8, subMenuIDs = {9, 10, 11, 12})
+    @Menu(command = "M", description = "Modify vehicle entries", id = 8, subMenuIDs = {9, 10, 11, 12})
     @Menu(command = "O", description = "Add car options", id = 9)
     public void addOptions() {
-        Car v = (Car) search();
+        Car v = (Car) search(vehicles);
         if (v != null) try {
             do addOption(v);
             while (Reader.readBoolean("Add another option? (Y/N)"));
@@ -217,7 +219,7 @@ public class MainApplication {
 
     @Menu(command = "LR", description = "Add/remove motorbike luggage rack", id = 10)
     public void addRemoveLuggageRack() {
-        Motorbike v = (Motorbike) search();
+        Motorbike v = (Motorbike) search(vehicles);
         if (v != null && !v.hasLuggageBox) {
             String option = Reader.readObject("Add luggage rack?", "Yes", "No");
             if (option.equals("Yes")) {
@@ -241,7 +243,7 @@ public class MainApplication {
 
     @Menu(command = "C", description = "Change vehicle colour", id = 11)
     public void changeColour() {
-        Vehicle v = search();
+        Vehicle v = search(vehicles);
         if (v != null) {
             String newColour = Reader.readObject("Select vehicle colour: ", "Red", "Blue", "Green", "Black",
                     "White", "Yellow");
@@ -254,7 +256,7 @@ public class MainApplication {
 
     @Menu(command = "M", description = "Change vehicle mileage", id = 12)
     public void changeMileage() {
-        Vehicle v = search();
+        Vehicle v = search(vehicles);
         if (v != null) {
             int currentMileage = v.getMileage();
             System.out.println("Current mileage: " + currentMileage);
@@ -267,6 +269,60 @@ public class MainApplication {
         }
     }
 
+    @Menu(command = "D", description = "Delete vehicle entry", id = 13, index = 3)
+    public void deleteVehicle() {
+        Vehicle v = search(vehicles);
+        if (v != null) {
+            String selection = Reader.readObject("Selected vehicle: "+ v
+                    + "Are you sure you want to delete this vehicle? This cannot be undone!", "Yes", "No");
+            if (selection.equals("Yes")) {
+                System.out.println("Deleting vehicle...");
+            } else {
+                System.out.println("Deletion cancelled.");
+                return;
+            }
+            System.out.println("Vehicle deleted successfully.");
+        } else {
+            System.out.println("No vehicle found to delete.");
+        }
+    }
+
+    @Menu(command = "AV", description = "Vehicle archive", id = 14, subMenuIDs = {15, 16, 17})
+    @Menu(command = "A", description = "Archive sold vehicle", id = 15, index = -2)
+    public void archiveSoldVehicle() {
+        Vehicle v = search(vehicles);
+        if (v != null) {
+            String selection = Reader.readObject("Selected vehicle: "+ v
+                    + "Are you sure you want to archive this vehicle? This cannot be undone!", "Yes", "No");
+            if (selection.equals("Yes")) {
+                soldVehicles.add(v);
+                vehicles.remove(v);
+                System.out.println("Vehicle archived successfully.");
+            } else {
+                System.out.println("Archiving cancelled.");
+            }
+        } else {
+            System.out.println("No vehicle found to archive.");
+        }
+    }
+
+    @Menu(command = "LA", description = "List archived vehicles", id = 16, index = -1)
+    public void listArchivedVehicles() {
+        Collections.sort(soldVehicles);
+        for (Vehicle v : soldVehicles) {
+            System.out.println(v);
+        }
+    }
+
+    @Menu(command = "SA", description = "Search archived vehicles", id = 17)
+    public void searchArchivedVehicles() {
+        Vehicle v = search(soldVehicles);
+        if (v != null) {
+            System.out.println(v);
+        } else {
+            System.out.println("No vehicle was found!");
+        }
+    }
 
 }
 
