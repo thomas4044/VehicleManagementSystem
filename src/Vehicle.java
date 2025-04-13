@@ -79,7 +79,7 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
 
     @Override
     public String toString() {
-        return "\nMake:\t" + getMake() + "\nModel:\t" + getModel() + "\nYear:\t"
+        return "\nEntry ID:\t" + getId() + "\nMake:\t" + getMake() + "\nModel:\t" + getModel() + "\nYear:\t"
                 + getYear() + "\nVIN:\t" + getVin() + "\nGearbox Type:\t" + getGearboxType()
                 + "\nColour:\t" + getColour() + "\nMileage:\t" + getMileage();
     }
