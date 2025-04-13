@@ -17,7 +17,6 @@ public abstract class Vehicle {
         this.colour = colour;
         this.mileage = mileage;
         this.vin = vin;
-
     }
 
     // Getters for vehicle properties
@@ -51,13 +50,11 @@ public abstract class Vehicle {
         this.mileage = mileage;
     }
 
-    // Abstract method for printing details - can be called by any vehicle but functions differently depending on
-    // whether the vehicle is a car or motorbike.
     @Override
     public String toString() {
-        return "MAKE:\t" + make.toUpperCase() + "\nMODEL:\t" + model.toUpperCase() + "\nYEAR:\t"
-                + year + "\nVIN:\t" + vin.toUpperCase() + "\nGEARBOX TYPE:\t" + gearboxType
-                + "\nCOLOUR:\t" + colour.toUpperCase() + "\nMILEAGE:\t" + mileage;
+        return "\nMake:\t" + make.toUpperCase() + "\nModel:\t" + model.toUpperCase() + "\nYear:\t"
+                + year + "\nVIN:\t" + vin.toUpperCase() + "\nGearbox Type:\t" + gearboxType
+                + "\nColour:\t" + colour.toUpperCase() + "\nMileage:\t" + mileage;
     }
 
 }

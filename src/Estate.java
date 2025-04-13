@@ -3,8 +3,20 @@ public class Estate extends Car{
         super(make, model, year, gearboxType, colour, mileage, vin);
     }
 
+    private boolean hasThirdRowSeat = false;
+
+    // Setter to add third row seat.
+    public void addThirdRowSeat() {
+        this.hasThirdRowSeat = true;
+    }
+
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder result = new StringBuilder();
+        result.append("Estate Car:\n").append(super.toString());
+        if (hasThirdRowSeat) {
+            result.append("\nThird Row Seat");
+        }
+        return result.toString();
     }
 }

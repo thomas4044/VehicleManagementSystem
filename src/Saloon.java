@@ -4,4 +4,9 @@ public class Saloon extends Car {
         super(make, model, year, gearboxType, colour, mileage, vin);
 
     }
+
+    @Override
+    public String toString() {
+        return "Saloon Car:\n" + super.toString();
+    }
 }

@@ -1,10 +1,10 @@
+// Class is abstract as each car type is now its own class
 public abstract class Car extends Vehicle {
-    //private final BodyType bodyType;
+
     private boolean hasSatNav = false;
     private boolean hasParkingSensors = false;
     private boolean hasTowBar = false;
     private boolean hasRoofRack = false;
-    private boolean hasThirdRowSeat = false;
 
     public Car(String make, String model, int year, GearboxType gearboxType, String colour, int mileage, String vin) {
         super(make, model, year, gearboxType, colour, mileage, vin);
@@ -12,49 +12,47 @@ public abstract class Car extends Vehicle {
     }
 
 
-    /*
     // Switch method with cases for adding options by flipping boolean to true; throws error message if the wrong
     // option is selected based on the body type, or an invalid option is entered.
     public void addOption(String option) {
-        switch (option.toLowerCase()) {
-            case "satnav":
+        switch (option) {
+            case "Sat Nav":
                 this.hasSatNav = true;
                 break;
-            case "parkingsensors":
+            case "Parking Sensors":
                 this.hasParkingSensors = true;
                 break;
-            case "towbar":
+            case "Tow Bar":
                 this.hasTowBar = true;
                 break;
-            case "roofrack":
+            case "Roof Rack":
                 this.hasRoofRack = true;
-                break;
-            case "allwheeldrive":
-                if (bodyType == BodyType.SUV) this.hasAllWheelDrive = true;
-                else throw new IllegalArgumentException("All Wheel Drive is available only for SUVs.");
-                break;
-            case "thirdrowseat":
-                if (bodyType == BodyType.ESTATE) this.hasThirdRowSeat = true;
-                else throw new IllegalArgumentException("Third Row Seat is available only for Estate cars.");
                 break;
             default:
                 throw new IllegalArgumentException("Invalid option or input. Please enter an option as written above.");
         }
     }
-    */
+
+
+//    @Override
+//    public String toString() {
+//        return "Car: \n" + super.toString() + "\nHas Sat Nav:\t" + hasSatNav + "\nHas Parking Sensors:\t" + hasParkingSensors
+//                + "\nHas Tow Bar:\t" + hasTowBar + "\nHas Roof Rack:\t" + hasRoofRack;
+
     @Override
     public String toString() {
-
-        System.out.println("ADDITIONAL OPTIONS: ");
-        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack && !hasThirdRowSeat) {
-            System.out.println("NO ADDITIONAL OPTIONS");
+        StringBuilder result = new StringBuilder();
+        result.append(super.toString());
+        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
+            result.append("No additional options");
         } else {
-            if (hasSatNav) System.out.print("SATNAV");
-            if (hasParkingSensors) System.out.print("\tPARKING SENSORS");
-            if (hasTowBar) System.out.print("\tTOW BAR");
-            if (hasRoofRack) System.out.print("\tROOF RACK");
-            if (hasThirdRowSeat) System.out.print("\tTHIRD ROW SEAT");
-            System.out.println();
+            result.append("\nAdditional Options:");
+            if (hasSatNav) result.append("\nSat Nav");
+            if (hasParkingSensors) result.append("\nParking Sensors");
+            if (hasTowBar) result.append("\nTow Bar");
+            if (hasRoofRack) result.append("\nRoof Rack");
         }
+        return result.toString();
     }
 }
+
