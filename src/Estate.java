@@ -13,6 +13,6 @@ public class Estate extends Car {
 
     @Override
     public String toString() {
-        return "\nEntry ID:\t" + getId() + super.toString() + getAdditionalOptions();
+        return "\nEntry ID:\t" + getId() + "\nEstate car" + super.toString() + getAdditionalOptions();
     }
 }

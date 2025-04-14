@@ -11,22 +11,37 @@ public abstract class Car extends Vehicle {
 
     }
 
+    public void addSatNav() {
+        this.hasSatNav = true;
+    }
+
+    public void addParkingSensors() {
+        this.hasParkingSensors = true;
+    }
+
+    public void addTowBar() {
+        this.hasTowBar = true;
+    }
+
+    public void addRoofRack() {
+        this.hasRoofRack = true;
+    }
 
     // Switch method with cases for adding options by flipping boolean to true; throws error message if the wrong
     // option is selected based on the body type, or an invalid option is entered.
     public void addOption(String option) {
         switch (option) {
             case "Sat Nav":
-                this.hasSatNav = true;
+                this.addSatNav();
                 break;
             case "Parking Sensors":
-                this.hasParkingSensors = true;
+                this.addParkingSensors();
                 break;
             case "Tow Bar":
-                this.hasTowBar = true;
+                this.addTowBar();
                 break;
             case "Roof Rack":
-                this.hasRoofRack = true;
+                this.addRoofRack();
                 break;
             case "All-Wheel Drive":
                 if (this instanceof Suv)
@@ -39,6 +54,9 @@ public abstract class Car extends Vehicle {
                     ((Estate) this).addThirdRowSeat();
                 else
                     throw new IllegalArgumentException("Third Row Seat is available only for Estate cars.");
+                break;
+            case "Exit":
+                System.out.println("Exiting...");
                 break;
             default:
                 throw new IllegalArgumentException("Invalid option or input. Please enter an option as written above.");
@@ -66,26 +84,5 @@ public abstract class Car extends Vehicle {
         }
         return result.toString();
     }
-
-//    @Override
-//    public String toString() {
-//        return "Car: \n" + super.toString() + "\nHas Sat Nav:\t" + hasSatNav + "\nHas Parking Sensors:\t" + hasParkingSensors
-//                + "\nHas Tow Bar:\t" + hasTowBar + "\nHas Roof Rack:\t" + hasRoofRack;
-
-//    @Override
-//    public String toString() {
-//        StringBuilder result = new StringBuilder();
-//        result.append(super.toString());
-//        if (!hasSatNav && !hasParkingSensors && !hasTowBar && !hasRoofRack) {
-//            result.append("\nNo additional options");
-//        } else {
-//            result.append("\nAdditional Options:");
-//            if (hasSatNav) result.append("\nSat Nav");
-//            if (hasParkingSensors) result.append("\nParking Sensors");
-//            if (hasTowBar) result.append("\nTow Bar");
-//            if (hasRoofRack) result.append("\nRoof Rack");
-//        }
-//        return result.toString();
-//    }
 }
 

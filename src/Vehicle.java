@@ -58,9 +58,13 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
 
     @Override
     public int compareTo(Vehicle other) {
-        // VIN is unique for each vehicle, so it is the first property to compare. Otherwise, the order of comparison is
-        // make, model, class name (vehicle type) and entry ID.
-        int compare = this.vin.compareTo(other.vin);
+        // Vehicles are compared by type (class name) first, to order them by vehicle type. Then they are sorted by VIN
+        // (which is unique for each vehicle), make, model and entry ID.
+        int compare = this.getClass().getName().compareTo(other.getClass().getName());
+        if (compare != 0) {
+            return compare;
+        }
+        compare = this.vin.compareTo(other.vin);
         if (compare != 0) {
             return compare;
         }
@@ -69,10 +73,6 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
             return compare;
         }
         compare = this.model.compareTo(other.model);
-        if (compare != 0) {
-            return compare;
-        }
-        compare = this.getClass().getName().compareTo(other.getClass().getName());
         if (compare != 0) {
             return compare;
         }

@@ -24,6 +24,8 @@ public class MainApplication {
 
     public static void main(String[] ignoredArgs) {
 
+        System.out.println("Welcome to the Vehicle Management System!");
+        System.out.println("Please see ReadMe.txt for instructions on how to use the program.");
         Application.start(MainApplication.class);
 
     }
@@ -197,9 +199,13 @@ public class MainApplication {
 
     public static void addOption(Car car) {
         String option = Reader.readObject("Select an Option", "Sat Nav", "Parking Sensors", "Tow Bar", "Roof Rack",
-                "All-Wheel Drive", "Third Row Seat");
-        car.addOption(option);
-        System.out.println("Option added: " + option);
+                "All-Wheel Drive", "Third Row Seat", "Go Back");
+        if (option.equals("Go Back")) {
+            System.out.println("Trying again...");
+        } else {
+            car.addOption(option);
+            System.out.println("Option added: " + option);
+        }
     }
 
     @Menu(command = "M", description = "Modify vehicle entries", id = 8, subMenuIDs = {9, 10, 11, 12})
@@ -274,9 +280,10 @@ public class MainApplication {
         Vehicle v = search(vehicles);
         if (v != null) {
             String selection = Reader.readObject("Selected vehicle: "+ v
-                    + "Are you sure you want to delete this vehicle? This cannot be undone!", "Yes", "No");
+                    + "\nAre you sure you want to delete this vehicle? This cannot be undone!", "Yes", "No");
             if (selection.equals("Yes")) {
                 System.out.println("Deleting vehicle...");
+                vehicles.remove(v);
             } else {
                 System.out.println("Deletion cancelled.");
                 return;
@@ -287,7 +294,7 @@ public class MainApplication {
         }
     }
 
-    @Menu(command = "AV", description = "Vehicle archive", id = 14, subMenuIDs = {15, 16, 17})
+    @Menu(command = "VA", description = "Vehicle archive", id = 14, subMenuIDs = {15, 16, 17})
     @Menu(command = "A", description = "Archive sold vehicle", id = 15, index = -2)
     public void archiveSoldVehicle() {
         Vehicle v = search(vehicles);
